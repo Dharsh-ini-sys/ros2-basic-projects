@@ -74,6 +74,25 @@ Instead of opening multiple terminals and running each node separately, the comp
 - Package launch configuration
 - `ros2 launch`
 
+### Project 6 — Simulated Robot Action Controller 🎯🤖
+
+A simulated robot receives a target distance as an action goal, moves toward the target gradually, publishes feedback during movement, and returns a final result.
+
+The project uses a custom `.action` interface with separate goal, feedback, and result definitions.
+
+**ROS concepts:**
+- ROS 2 Actions
+- Action Server
+- Action Client
+- Custom ROS interfaces
+- `.action` files
+- Goals
+- Feedback
+- Results
+- Goal cancellation
+- `ament_cmake`
+- `ament_python`
+
 ## How to Run
 
 ### Project 1 — Temperature Monitor
@@ -142,6 +161,25 @@ robot_controller
 
 together.
 
+Project 6 — Simulated Robot Action Controller
+
+Run the action server:
+
+ros2 run robot_action_controller action_server
+
+In another terminal:
+
+ros2 run robot_action_controller action_client
+
+The client sends a goal of 5.0 m and receives feedback while the simulated robot moves toward the goal.
+
+You can inspect the action with:
+
+ros2 action list
+
+and:
+
+ros2 action info /move_robot
 Useful ROS 2 Commands
 ros2 node list
 ros2 topic list
@@ -156,6 +194,8 @@ ros2 param list
 ros2 param get /robot_controller warning_distance
 ros2 param set /robot_controller warning_distance 1.5
 ros2 launch robot_controller robot_system.launch.py
+ros2 action list
+ros2 action info /move_robot
 Future Projects
 
 This repository will grow as I learn more ROS 2 concepts, eventually moving toward more advanced robotics projects.
