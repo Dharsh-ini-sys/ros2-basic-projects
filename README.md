@@ -1,131 +1,119 @@
-# ROS 2 Basic Projects 🤖
+# ROS 2 Basic Projects
 
-A collection of beginner ROS 2 projects built while learning ROS 2, Python, nodes, topics, publishers, subscribers, and robot decision-making.
-
----
+A collection of beginner ROS 2 projects built while learning robotics and automation.
 
 ## Projects
 
-### 01 — Simulated Temperature Monitor 
+### Project 1 — Simulated Temperature Monitor 🌡️
 
-A simulated temperature sensor publishes temperature readings, while a monitor node subscribes to the `/temperature` topic and classifies the temperature as NORMAL or WARNING.
+A simulated temperature sensor publishes temperature data, and a monitor node subscribes to it and classifies the temperature as NORMAL or WARNING.
 
-#### Architecture
+**ROS concepts:**
+- Nodes
+- Topics
+- Publisher
+- Subscriber
+- Timers
+- `Float32` messages
 
-```text
-Simulated Temperature Sensor
-            ↓
-      /temperature
-            ↓
-    Temperature Monitor
+### Project 2 — Simulated Distance Sensor & Obstacle Detector 📏🚧
 
-ROS concepts
-Publisher
-Subscriber
-Topics
-std_msgs/msg/Float32
-Timers
-Callbacks
+A simulated distance sensor publishes decreasing distance values, while an obstacle detector classifies the distance as SAFE, WARNING, or STOP.
 
+**ROS concepts:**
+- Nodes
+- Topics
+- Publisher
+- Subscriber
+- Callbacks
+- Conditional logic
+- `Float32` messages
 
-02 — Simulated Distance Sensor + Obstacle Detector
+### Project 3 — Calculator Service 🧮
 
-A simulated distance sensor publishes changing distance values. An obstacle detector subscribes to the /distance topic and determines whether the environment is SAFE, WARNING, or STOP.
+A ROS 2 service that accepts two numbers and returns their sum.
 
-Architecture
-Simulated Distance Sensor
-            ↓
-        /distance
-            ↓
-     Obstacle Detector
-       ↓      ↓      ↓
-     SAFE  WARNING  STOP
-Decision Logic
-Distance > 1.0 m     → SAFE
-0.5 m < Distance ≤ 1.0 m → WARNING
-Distance ≤ 0.5 m     → STOP
-ROS concepts
-Publisher
-Subscriber
-Topics
-std_msgs/msg/Float32
-Timers
-Callbacks
-Conditional decision logic
-Node-to-node communication
-Technologies
-ROS 2 Humble
-Python
-Ubuntu 22.04
-WSL2
-Git
-GitHub
-ROS 2 Concepts Practiced
-Nodes
-Topics
-Publishers
-Subscribers
-Message types
-Timers
-Callbacks
-Decision logic
-ROS 2 package creation
-Building with colcon
-Running ROS 2 nodes
-Git and GitHub workflow
-Workspace Structure
-ros2_work/
-└── src/
-    ├── temp_monitor/
-    │   ├── temp_monitor/
-    │   ├── package.xml
-    │   ├── setup.py
-    │   └── README.md
-    │
-    └── distance_sensor/
-        ├── distance_sensor/
-        │   ├── distance_sensor.py
-        │   └── obstacle_detector.py
-        ├── package.xml
-        └── setup.py
-How to Build
+The project uses a custom `.srv` interface with a separate interface package.
 
-From the workspace:
+**ROS concepts:**
+- Services
+- Client / Server
+- Custom ROS interfaces
+- `.srv` files
+- `ament_cmake`
+- `ament_python`
+- Request / Response
 
-cd ~/ros2_work
-colcon build
-source install/setup.bash
-How to Run
-Project 1 — Temperature Monitor
+## How to Run
+
+### Project 1 — Temperature Monitor
 
 Run the simulated sensor:
 
+```bash
 ros2 run temp_monitor temp_sensor
+````
 
 In another terminal:
 
+```bash
 ros2 run temp_monitor temp_monitor
-Project 2 — Distance Sensor
+```
+
+### Project 2 — Distance Sensor
 
 Run the simulated distance sensor:
 
+```bash
 ros2 run distance_sensor distance_sensor
+```
 
 In another terminal:
 
+```bash
 ros2 run distance_sensor obstacle_detector
-Useful ROS 2 Commands
+```
+
+### Project 3 — Calculator Service
+
+Run the calculator server:
+
+```bash
+ros2 run calculator_service calculator_server
+```
+
+In another terminal:
+
+```bash
+ros2 run calculator_service calculator_client
+```
+
+You can also call the service directly using the ROS 2 CLI:
+
+```bash
+ros2 service call /add_two_numbers calculator_interfaces/srv/AddTwoNumbers "{a: 10.0, b: 25.0}"
+```
+
+## Useful ROS 2 Commands
+
+```bash
 ros2 node list
 ros2 topic list
 ros2 topic echo /temperature
 ros2 topic echo /distance
 ros2 topic info /temperature
 ros2 topic info /distance
-Future Projects
+ros2 service list
+ros2 service type /add_two_numbers
+ros2 interface show calculator_interfaces/srv/AddTwoNumbers
+```
 
-This repository will grow as I learn more ROS 2 concepts, eventually moving from basic simulated nodes toward robot control, sensors, navigation, and SLAM.
+## Future Projects
 
-Author
+This repository will grow as I learn more ROS 2 concepts, eventually moving toward more advanced robotics projects.
+
+## Author
 
 Dharshini
 Robotics & Automation Engineering
+
