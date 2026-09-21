@@ -60,12 +60,27 @@ The warning and stop distances can be changed while the node is running without 
 - Callbacks
 - `Float32` messages
 
+### Project 5 — Simulated Robot Launch System 🚀
+
+A ROS 2 launch file starts the simulated distance sensor and robot safety controller together as a single system.
+
+Instead of opening multiple terminals and running each node separately, the complete system can be started with one `ros2 launch` command.
+
+**ROS concepts:**
+- Launch files
+- `LaunchDescription`
+- Launch actions
+- Starting multiple nodes
+- Package launch configuration
+- `ros2 launch`
+
 ## How to Run
 
 ### Project 1 — Temperature Monitor
 
 Run the simulated sensor:
 
+```bash
 ros2 run temp_monitor temp_sensor
 
 In another terminal:
@@ -114,6 +129,19 @@ ros2 param get /robot_controller warning_distance
 Change the warning distance while the node is running:
 
 ros2 param set /robot_controller warning_distance 1.5
+Project 5 — Simulated Robot Launch System
+
+Start the complete system with one command:
+
+ros2 launch robot_controller robot_system.launch.py
+
+This launches:
+
+distance_sensor
+robot_controller
+
+together.
+
 Useful ROS 2 Commands
 ros2 node list
 ros2 topic list
@@ -127,6 +155,7 @@ ros2 interface show calculator_interfaces/srv/AddTwoNumbers
 ros2 param list
 ros2 param get /robot_controller warning_distance
 ros2 param set /robot_controller warning_distance 1.5
+ros2 launch robot_controller robot_system.launch.py
 Future Projects
 
 This repository will grow as I learn more ROS 2 concepts, eventually moving toward more advanced robotics projects.
