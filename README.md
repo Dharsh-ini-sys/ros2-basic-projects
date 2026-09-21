@@ -44,59 +44,77 @@ The project uses a custom `.srv` interface with a separate interface package.
 - `ament_python`
 - Request / Response
 
+### Project 4 — Robot Safety Controller ⚠️🤖
+
+A simulated robot controller subscribes to distance data and uses ROS 2 parameters to determine whether the robot is SAFE, in WARNING range, or should STOP.
+
+The warning and stop distances can be changed while the node is running without modifying the Python code.
+
+**ROS concepts:**
+- ROS 2 Parameters
+- Parameter declaration
+- Parameter retrieval
+- Runtime parameter changes
+- Topics
+- Subscriber
+- Callbacks
+- `Float32` messages
+
 ## How to Run
 
 ### Project 1 — Temperature Monitor
 
 Run the simulated sensor:
 
-```bash
 ros2 run temp_monitor temp_sensor
-````
 
 In another terminal:
 
-```bash
 ros2 run temp_monitor temp_monitor
-```
-
-### Project 2 — Distance Sensor
+Project 2 — Distance Sensor
 
 Run the simulated distance sensor:
 
-```bash
 ros2 run distance_sensor distance_sensor
-```
 
 In another terminal:
 
-```bash
 ros2 run distance_sensor obstacle_detector
-```
-
-### Project 3 — Calculator Service
+Project 3 — Calculator Service
 
 Run the calculator server:
 
-```bash
 ros2 run calculator_service calculator_server
-```
 
 In another terminal:
 
-```bash
 ros2 run calculator_service calculator_client
-```
 
 You can also call the service directly using the ROS 2 CLI:
 
-```bash
 ros2 service call /add_two_numbers calculator_interfaces/srv/AddTwoNumbers "{a: 10.0, b: 25.0}"
-```
+Project 4 — Robot Safety Controller
 
-## Useful ROS 2 Commands
+Run the simulated distance sensor:
 
-```bash
+ros2 run distance_sensor distance_sensor
+
+In another terminal:
+
+ros2 run robot_controller robot_controller
+
+View the parameters:
+
+ros2 param list
+
+Check the warning distance:
+
+ros2 param get /robot_controller warning_distance
+
+Change the warning distance while the node is running:
+
+ros2 param set /robot_controller warning_distance 1.5
+Useful ROS 2 Commands
 ros2 node list
 ros2 topic list
 ros2 topic echo /temperature
@@ -106,14 +124,14 @@ ros2 topic info /distance
 ros2 service list
 ros2 service type /add_two_numbers
 ros2 interface show calculator_interfaces/srv/AddTwoNumbers
-```
-
-## Future Projects
+ros2 param list
+ros2 param get /robot_controller warning_distance
+ros2 param set /robot_controller warning_distance 1.5
+Future Projects
 
 This repository will grow as I learn more ROS 2 concepts, eventually moving toward more advanced robotics projects.
 
-## Author
+Author
 
 Dharshini
 Robotics & Automation Engineering
-
