@@ -93,6 +93,22 @@ The project uses a custom `.action` interface with separate goal, feedback, and 
 - `ament_cmake`
 - `ament_python`
 
+### Project 7 — TF2 Robot Frames 🧭
+
+A simulated robot broadcasts its position using TF2, with `base_link` represented relative to the `odom` frame. A separate listener queries the transform and reports the robot's current position.
+
+**ROS concepts:**
+- TF2
+- Coordinate frames
+- `odom`
+- `base_link`
+- Transform broadcasting
+- Transform listening
+- `TransformStamped`
+- `TransformBroadcaster`
+- `TransformListener`
+- `lookup_transform()`
+
 ## How to Run
 
 ### Project 1 — Temperature Monitor
@@ -124,7 +140,7 @@ In another terminal:
 
 ros2 run calculator_service calculator_client
 
-You can also call the service directly using the ROS 2 CLI:
+You can also call the service directly:
 
 ros2 service call /add_two_numbers calculator_interfaces/srv/AddTwoNumbers "{a: 10.0, b: 25.0}"
 Project 4 — Robot Safety Controller
@@ -171,15 +187,23 @@ In another terminal:
 
 ros2 run robot_action_controller action_client
 
-The client sends a goal of 5.0 m and receives feedback while the simulated robot moves toward the goal.
-
-You can inspect the action with:
+Inspect the action:
 
 ros2 action list
-
-and:
-
 ros2 action info /move_robot
+Project 7 — TF2 Robot Frames
+
+Run the TF broadcaster:
+
+ros2 run tf2_demo tf_broadcaster
+
+In another terminal:
+
+ros2 run tf2_demo tf_listener
+
+You can also inspect the transform directly:
+
+ros2 run tf2_ros tf2_echo odom base_link
 Useful ROS 2 Commands
 ros2 node list
 ros2 topic list
@@ -196,6 +220,7 @@ ros2 param set /robot_controller warning_distance 1.5
 ros2 launch robot_controller robot_system.launch.py
 ros2 action list
 ros2 action info /move_robot
+ros2 run tf2_ros tf2_echo odom base_link
 Future Projects
 
 This repository will grow as I learn more ROS 2 concepts, eventually moving toward more advanced robotics projects.
