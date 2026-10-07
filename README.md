@@ -109,6 +109,70 @@ A simulated robot broadcasts its position using TF2, with `base_link` represente
 - `TransformListener`
 - `lookup_transform()`
 
+### Project 8 — Simulated 2D LiDAR 📡
+
+A simulated 2D LiDAR publishes `LaserScan` data containing 360 distance measurements. The project simulates obstacles at different distances and includes an obstacle analyzer that extracts front, left, and right distances.
+
+The LiDAR data was visualized in RViz2 using the `/scan` topic.
+
+**ROS concepts:**
+- `sensor_msgs/msg/LaserScan`
+- LiDAR simulation
+- Range measurements
+- Sensor data processing
+- Topic publishing/subscribing
+- RViz2
+- LaserScan visualization
+- Basic obstacle analysis
+- Coordinate frames
+
+### Project 9 — Robot Motion & Teleoperation 🤖
+
+A simulated robot receives velocity commands through `/cmd_vel` using `geometry_msgs/msg/Twist`.
+
+The robot simulator integrates linear and angular velocity to update the robot's simulated position and orientation. TF2 is used to publish the robot's `odom → base_link` transform.
+
+A teleoperation node allows the robot to move forward, backward, turn, and stop using simple keyboard commands.
+
+**ROS concepts:**
+- `geometry_msgs/msg/Twist`
+- `/cmd_vel`
+- Velocity commands
+- Robot motion simulation
+- Linear and angular velocity
+- Basic differential-drive-style motion equations
+- TF2
+- Quaternion orientation
+- Teleoperation
+- `odom → base_link`
+
+### Project 10 — rosbag Data Recording & Replay 📦
+
+ROS 2 topics from the simulated robot system were recorded using `ros2 bag`.
+
+The project records and replays sensor data, velocity commands, and TF information. Recorded bags were inspected using `ros2 bag info` and replayed using `ros2 bag play`.
+
+The final experiment recorded:
+
+- `/cmd_vel`
+- `/scan`
+- `/tf`
+
+The recorded dataset contained 339 messages over approximately 28.5 seconds.
+
+**ROS concepts:**
+- rosbag
+- Recording ROS topics
+- Replaying recorded data
+- `ros2 bag record`
+- `ros2 bag info`
+- `ros2 bag play`
+- SQLite3 bag storage
+- Message timestamps
+- Recorded datasets
+- Multi-topic recording
+- ROS data analysis
+
 ## How to Run
 
 ### Project 1 — Temperature Monitor
@@ -117,115 +181,291 @@ Run the simulated sensor:
 
 ```bash
 ros2 run temp_monitor temp_sensor
+```
 
 In another terminal:
 
+```bash
 ros2 run temp_monitor temp_monitor
-Project 2 — Distance Sensor
+```
+
+### Project 2 — Distance Sensor
 
 Run the simulated distance sensor:
 
+```bash
 ros2 run distance_sensor distance_sensor
+```
 
 In another terminal:
 
+```bash
 ros2 run distance_sensor obstacle_detector
-Project 3 — Calculator Service
+```
+
+### Project 3 — Calculator Service
 
 Run the calculator server:
 
+```bash
 ros2 run calculator_service calculator_server
+```
 
 In another terminal:
 
+```bash
 ros2 run calculator_service calculator_client
+```
 
 You can also call the service directly:
 
+```bash
 ros2 service call /add_two_numbers calculator_interfaces/srv/AddTwoNumbers "{a: 10.0, b: 25.0}"
-Project 4 — Robot Safety Controller
+```
+
+### Project 4 — Robot Safety Controller
 
 Run the simulated distance sensor:
 
+```bash
 ros2 run distance_sensor distance_sensor
+```
 
 In another terminal:
 
+```bash
 ros2 run robot_controller robot_controller
+```
 
 View the parameters:
 
+```bash
 ros2 param list
+```
 
 Check the warning distance:
 
+```bash
 ros2 param get /robot_controller warning_distance
+```
 
 Change the warning distance while the node is running:
 
+```bash
 ros2 param set /robot_controller warning_distance 1.5
-Project 5 — Simulated Robot Launch System
+```
+
+### Project 5 — Simulated Robot Launch System
 
 Start the complete system with one command:
 
+```bash
 ros2 launch robot_controller robot_system.launch.py
+```
 
 This launches:
 
-distance_sensor
-robot_controller
+- `distance_sensor`
+- `robot_controller`
 
 together.
 
-Project 6 — Simulated Robot Action Controller
+### Project 6 — Simulated Robot Action Controller
 
 Run the action server:
 
+```bash
 ros2 run robot_action_controller action_server
+```
 
 In another terminal:
 
+```bash
 ros2 run robot_action_controller action_client
+```
 
 Inspect the action:
 
+```bash
 ros2 action list
 ros2 action info /move_robot
-Project 7 — TF2 Robot Frames
+```
+
+### Project 7 — TF2 Robot Frames
 
 Run the TF broadcaster:
 
+```bash
 ros2 run tf2_demo tf_broadcaster
+```
 
 In another terminal:
 
+```bash
 ros2 run tf2_demo tf_listener
+```
 
 You can also inspect the transform directly:
 
+```bash
 ros2 run tf2_ros tf2_echo odom base_link
-Useful ROS 2 Commands
+```
+
+### Project 8 — Simulated 2D LiDAR
+
+Run the LiDAR simulator:
+
+```bash
+ros2 run lidar_demo lidar_simulator
+```
+
+In another terminal, run the obstacle analyzer:
+
+```bash
+ros2 run lidar_demo obstacle_analyzer
+```
+
+Inspect the LiDAR data:
+
+```bash
+ros2 topic echo /scan
+```
+
+The `/scan` topic can also be visualized in RViz2 using a `LaserScan` display.
+
+### Project 9 — Robot Motion & Teleoperation
+
+Run the robot simulator:
+
+```bash
+ros2 run robot_motion robot_simulator
+```
+
+In another terminal, run the teleoperation controller:
+
+```bash
+ros2 run robot_motion teleop_controller
+```
+
+The teleoperation commands are:
+
+```text
+f → forward
+b → backward
+l → rotate left
+r → rotate right
+s → stop
+```
+
+The robot receives velocity commands through:
+
+```text
+/cmd_vel
+```
+
+The robot's transform can be inspected using:
+
+```bash
+ros2 run tf2_ros tf2_echo odom base_link
+```
+
+### Project 10 — rosbag Recording & Replay
+
+Record selected ROS topics:
+
+```bash
+ros2 bag record /scan /cmd_vel /tf
+```
+
+Inspect the recorded bag:
+
+```bash
+ros2 bag info <bag_name>
+```
+
+Replay the recorded data:
+
+```bash
+ros2 bag play <bag_name>
+```
+
+While the bag is playing, the recorded topics are published again as ROS topics.
+
+## Useful ROS 2 Commands
+
+### Nodes
+
+```bash
 ros2 node list
+ros2 node info <node_name>
+```
+
+### Topics
+
+```bash
 ros2 topic list
-ros2 topic echo /temperature
-ros2 topic echo /distance
-ros2 topic info /temperature
-ros2 topic info /distance
+ros2 topic echo <topic>
+ros2 topic info <topic>
+ros2 topic hz <topic>
+```
+
+### Services
+
+```bash
 ros2 service list
 ros2 service type /add_two_numbers
 ros2 interface show calculator_interfaces/srv/AddTwoNumbers
+```
+
+### Parameters
+
+```bash
 ros2 param list
 ros2 param get /robot_controller warning_distance
 ros2 param set /robot_controller warning_distance 1.5
+```
+
+### Launch
+
+```bash
 ros2 launch robot_controller robot_system.launch.py
+```
+
+### Actions
+
+```bash
 ros2 action list
 ros2 action info /move_robot
+```
+
+### TF2
+
+```bash
 ros2 run tf2_ros tf2_echo odom base_link
-Future Projects
+```
 
-This repository will grow as I learn more ROS 2 concepts, eventually moving toward more advanced robotics projects.
+### rosbag
 
-Author
+```bash
+ros2 bag record <topic>
+ros2 bag info <bag_name>
+ros2 bag play <bag_name>
+```
 
-Dharshini
+## Future Projects
+
+This repository will grow as I learn more ROS 2 concepts, eventually moving toward more advanced robotics projects such as:
+
+- URDF / Xacro
+- `robot_state_publisher`
+- Gazebo simulation
+- Sensor integration
+- SLAM
+- Localization
+- Nav2
+- Autonomous mobile robot systems
+
+## Author
+
+Dharshini  
 Robotics & Automation Engineering
