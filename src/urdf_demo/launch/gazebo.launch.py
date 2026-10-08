@@ -8,25 +8,37 @@ import os
 
 def generate_launch_description():
 
+    # Path to the robot URDF
     urdf_file = os.path.join(
         get_package_share_directory('urdf_demo'),
         'urdf',
         'robot.urdf'
     )
 
+    # Path to the LiDAR test world
+    world_file = os.path.join(
+        get_package_share_directory('urdf_demo'),
+        'worlds',
+        'lidar_test.world'
+    )
+
+    # Read the robot URDF
     with open(urdf_file, 'r') as file:
         robot_description = file.read()
 
     return LaunchDescription([
 
-        # Start Gazebo using the ROS Gazebo launch file
+        # Start Gazebo with our custom world
         IncludeLaunchDescription(
             PythonLaunchDescriptionSource(
                 os.path.join(
                     '/opt/ros/humble/share/gazebo_ros/launch',
                     'gazebo.launch.py'
                 )
-            )
+            ),
+            launch_arguments={
+                'world': world_file
+            }.items()
         ),
 
         # Publish robot description and TF
@@ -39,8 +51,7 @@ def generate_launch_description():
             output='screen'
         ),
 
-        # Wait for Gazebo to finish starting,
-        # then spawn the robot
+        # Wait for Gazebo to start, then spawn the robot
         TimerAction(
             period=3.0,
             actions=[
